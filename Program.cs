@@ -49,7 +49,23 @@ app.MapDelete("/deleteUser/{id}", (string id) =>
     {
         return Results.NoContent();
     }
-    return Results.NotFound("Usuário não encontrado");   
+    return Results.NotFound("Usuário não encontrado");
+});
+
+app.MapPut("/users/{id}", (string id, User userAtualizado) =>
+{
+    User? user = userController.FindUser(id);
+
+    if (user is null)
+    {
+        return Results.NotFound("Usuário não encontrado");
+    }
+
+    user.Nome = userAtualizado.Nome;
+    user.Email = userAtualizado.Email;
+    user.Idade = userAtualizado.Idade;
+
+    return Results.Ok(user);
 });
 
 
